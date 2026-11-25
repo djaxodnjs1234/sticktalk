@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <!-- viewport-fit=cover: 노치/홈바 safe-area 대응, user-scalable=no + touch-action: 더블탭 확대 방지 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>캐나다 회화 500</title>
+  <meta name="description" content="캐나다 어학연수 대비 원어민 회화 단어·숙어 500 암기 앱">
+  <meta name="theme-color" content="#d52b1e" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141518" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <!-- PWA / iOS 홈 화면 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="회화500">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 저장소 접근 실패 등 경고 배너 -->
+    <div id="banner" class="banner" hidden></div>
+
+    <!-- 화면들: JS가 data-view 하나만 보이게 전환 -->
+    <main id="views">
+      <section class="view" id="view-home" data-view="home"></section>
+      <section class="view" id="view-learn" data-view="learn" hidden></section>
+      <section class="view" id="view-review" data-view="review" hidden></section>
+      <section class="view" id="view-list" data-view="list" hidden></section>
+      <section class="view" id="view-settings" data-view="settings" hidden></section>
+    </main>
+
+    <!-- 하단 탭바 -->
+    <nav class="tabbar" id="tabbar" aria-label="메뉴">
+      <button class="tab is-active" data-tab="home"><span class="tab-ico" aria-hidden="true">🏠</span><span>홈</span></button>
+      <button class="tab" data-tab="learn"><span class="tab-ico" aria-hidden="true">📚</span><span>학습</span></button>
+      <button class="tab" data-tab="review"><span class="tab-ico" aria-hidden="true">🔁</span><span>복습</span><i class="tab-dot" id="review-dot" hidden></i></button>
+      <button class="tab" data-tab="list"><span class="tab-ico" aria-hidden="true">📖</span><span>단어장</span></button>
+      <button class="tab" data-tab="settings"><span class="tab-ico" aria-hidden="true">⚙️</span><span>설정</span></button>
+    </nav>
+
+    <!-- 학습 세션 (전체 화면 오버레이) -->
+    <section id="session" class="session" hidden aria-live="polite"></section>
+
+    <!-- 바텀시트 (모드 선택, 단어 상세 등) -->
+    <div id="sheet-backdrop" class="sheet-backdrop" hidden></div>
+    <div id="sheet" class="sheet" hidden role="dialog" aria-modal="true"></div>
+
+    <!-- 축하 화면 -->
+    <section id="celebrate" class="celebrate" hidden></section>
+
+    <!-- 토스트 -->
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <!-- 컨페티 캔버스 -->
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- 데이터 → 앱 순서로 로드 (words.js만 바꿔 끼우면 다른 단어장으로 사용 가능) -->
+  <script src="words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
