@@ -1,5 +1,5 @@
 /* =========================================================
-   캐나다 회화 500 — app.js
+   입에 붙는 영어 (Stick Talk) — app.js
    - 프레임워크 없이 동작하는 단일 스크립트
    - 학습 데이터는 words.js 의 window.WORDS 배열 (형식은 words.js 상단 주석 참고)
    - 진도는 localStorage 에 저장 (실패하면 메모리에만 저장하고 경고 배너 표시)
@@ -21,9 +21,9 @@
     DAILY_NEW_OPTIONS: [10, 15, 20, 30],  // 설정에서 고를 수 있는 하루 새 항목 수
     XP_CORRECT: 10,                       // 정답 XP
     XP_GOAL: 50,                          // 일일 목표 달성 보너스 XP
-    STORAGE_KEY: 'canada500.state.v1',    // 진도 저장 키
-    AUDIO_KEY: 'canada500.audio.v1',      // 찾은 음성 주소 캐시 키
-    AUDIO_CACHE: 'canada500-audio-v1',    // 들은 음성 파일을 저장하는 Cache Storage 이름
+    STORAGE_KEY: 'sticktalk.state.v1',    // 진도 저장 키
+    AUDIO_KEY: 'sticktalk.audio.v1',      // 찾은 음성 주소 캐시 키
+    AUDIO_CACHE: 'sticktalk-audio-v1',    // 들은 음성 파일을 저장하는 Cache Storage 이름 (sw.js 와 같게)
     NONE_RETRY_DAYS: 14                   // "음성 없음" 결과를 다시 찾아보기까지의 일수
   };
   var SITUATIONS = ['홈스테이', '수업', '카페·식당', '교통', '쇼핑', '친구', '일반'];
@@ -112,7 +112,7 @@
 
   function loadState() {
     var base = defaultState();
-    var saved = store.get(CONFIG.STORAGE_KEY);
+    var saved = store.get(CONFIG.STORAGE_KEY) || store.get('canada500.state.v1'); // 옛 이름으로 저장된 진도도 읽음
     if (!saved || typeof saved !== 'object') return base;
     var s = Object.assign(base, saved);
     s.settings = Object.assign(defaultState().settings, saved.settings || {});
@@ -396,7 +396,7 @@
     var SILENT = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
     var REGION_RANK = { US: 0, CA: 1, UK: 2, AU: 3, '': 4 };
     var audio = null, unlocked = false, objUrl = null, token = 0, tatoebaFails = 0, tatoebaQueue = Promise.resolve();
-    var cache = store.get(CONFIG.AUDIO_KEY) || {};
+    var cache = store.get(CONFIG.AUDIO_KEY) || store.get('canada500.audio.v1') || {};
     var inflight = {};
 
     function el() {
@@ -1090,7 +1090,7 @@
         '<button class="btn btn-ghost btn-sm" id="btn-reset" style="color:var(--bad)">진도 초기화</button></div>' +
       '</div>' +
       '<div class="card about"><h2>정보</h2>' +
-        '<p><b>캐나다 회화 500</b> v' + CONFIG.APP_VERSION + ' · 항목 ' + TOTAL + '개 (단어 ' + ITEMS.filter(function (w) { return w.type === 'word'; }).length +
+        '<p><b>입에 붙는 영어</b> (Stick Talk) v' + CONFIG.APP_VERSION + ' · 항목 ' + TOTAL + '개 (단어 ' + ITEMS.filter(function (w) { return w.type === 'word'; }).length +
           ' · 숙어·표현 ' + ITEMS.filter(function (w) { return w.type === 'phrase'; }).length + ')</p>' +
         '<p><b>복습 규칙</b> 맞히면 1일 → 3일 → 7일 → 14일 → 30일 뒤 다시 나오고, 틀리면 1일로 돌아가요. 상자 4 이상이면 "외움".</p>' +
         '<p><b>원어민 음성</b> 기계 음성(TTS)은 쓰지 않고 사람이 직접 녹음한 음성만 재생해요. 한 번 들은 음성은 기기에 저장돼 오프라인에서도 들을 수 있어요. 찾은 음성 ' + vs.found + '개 · 없음 ' + vs.none + '개.</p>' +
@@ -1137,11 +1137,11 @@
   /* 진도 내보내기 / 가져오기 (JSON 파일) */
   function exportProgress() {
     try {
-      var data = { app: 'canada500', exportedAt: new Date().toISOString(), state: state };
+      var data = { app: 'sticktalk', exportedAt: new Date().toISOString(), state: state };
       var blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'canada500-progress-' + today() + '.json';
+      a.download = 'sticktalk-progress-' + today() + '.json';
       document.body.appendChild(a); a.click();
       setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
       toast('진도 파일을 저장했어요');

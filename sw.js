@@ -1,10 +1,10 @@
 /* =========================================================
    서비스 워커 — 앱 파일을 저장해 오프라인에서도 학습 가능
    words.js 등을 바꿔서 다시 올렸다면 VERSION 을 올려 주세요.
-   (음성 파일은 app.js 가 'canada500-audio-v1' 캐시에 따로 저장)
+   (음성 파일은 app.js 가 'sticktalk-audio-v1' 캐시에 따로 저장)
    ========================================================= */
-var VERSION = 'canada500-shell-v1.0.0';
-var AUDIO_CACHE = 'canada500-audio-v1';
+var VERSION = 'sticktalk-shell-v1.0.0';
+var AUDIO_CACHE = 'sticktalk-audio-v1';
 var SHELL = [
   './', 'index.html', 'style.css', 'app.js', 'words.js', 'manifest.json',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'

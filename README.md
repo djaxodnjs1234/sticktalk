@@ -1,7 +1,10 @@
-# 🍁 캐나다 회화 500
+# 🍁 입에 붙는 영어 (Stick Talk)
 
-캐나다 어학연수(UVic, 2027-01-04 ~ 01-29)를 대비해 원어민 회화에서 자주 쓰는 **단어 300개와 숙어·표현 200개**를 외우는 모바일 웹앱입니다.
-빌드 도구 없이 정적 파일만으로 동작하고, 홈 화면에 추가하면 앱처럼 쓸 수 있으며 오프라인에서도 학습할 수 있습니다.
+**외운 표현이 회화에서 바로 나오게.** 원어민 회화에서 자주 쓰는 단어와 숙어를 간격 반복(SRS)으로 확실하게 외우는 모바일 웹앱입니다.
+
+- 지금은 캐나다 어학연수(UVic, 2027-01-04 ~ 01-29) 대비 **단어 300개 + 숙어·표현 200개 = 500개**가 들어 있습니다.
+- `words.js`에 항목을 추가하면 그대로 늘어납니다(4장 참고).
+- 빌드 도구 없이 정적 파일만으로 동작합니다. 홈 화면에 추가하면 앱처럼 쓸 수 있고 오프라인에서도 학습할 수 있습니다.
 
 ---
 
@@ -66,29 +69,29 @@ icons/          앱 아이콘
 
 ### 방법 A. Netlify Drop (가장 쉬움, 5분)
 1. PC에서 https://app.netlify.com/drop 에 접속합니다. 무료 계정으로 로그인하세요. 로그인하지 않고 올린 사이트는 잠시 뒤 삭제됩니다.
-2. 이 폴더(`vocab-project`)를 통째로 브라우저 창에 끌어다 놓습니다.
-3. 몇 초 뒤 `https://무작위이름.netlify.app` 주소가 생깁니다. Site settings에서 이름을 바꿀 수 있습니다(예: `canada500.netlify.app`).
+2. 이 폴더(`sticktalk`)를 통째로 브라우저 창에 끌어다 놓습니다.
+3. 몇 초 뒤 `https://무작위이름.netlify.app` 주소가 생깁니다. Site settings에서 이름을 바꿀 수 있습니다(예: `sticktalk.netlify.app`).
 4. 그 주소를 폰으로 보내서 엽니다.
 
 ### 방법 B. GitHub Pages (무료, 계속 유지)
-1. GitHub에 로그인한 뒤 **New repository**를 누르고, 이름(예: `canada500`)을 정하고 **Public**으로 만듭니다.
+1. GitHub에 로그인한 뒤 **New repository**를 누르고, 이름을 `sticktalk`로 정하고 **Public**으로 만듭니다.
 2. 저장소 화면에서 **Add file → Upload files**를 누르고 폴더 안의 파일을 모두 끌어다 놓은 뒤 **Commit changes**를 누릅니다. `icons` 폴더도 포함해야 합니다.
 3. **Settings → Pages**에서 *Source: Deploy from a branch*, *Branch: main / (root)*를 고르고 **Save**를 누릅니다.
-4. 1~2분 뒤 `https://내아이디.github.io/canada500/` 주소로 열립니다.
+4. 1~2분 뒤 `https://내아이디.github.io/sticktalk/` 주소로 열립니다.
 
 터미널을 쓴다면 이렇게 올릴 수도 있습니다.
 ```bash
-cd vocab-project
-git init && git add . && git commit -m "캐나다 회화 500"
+cd sticktalk
+git init && git add . && git commit -m "입에 붙는 영어 (Stick Talk)"
 git branch -M main
-git remote add origin https://github.com/내아이디/canada500.git
+git remote add origin https://github.com/내아이디/sticktalk.git
 git push -u origin main
 ```
 
 ### 아이폰: 홈 화면에 추가
 1. **Safari**로 배포 주소를 엽니다.
 2. 아래쪽 **공유 버튼(□↑)**을 누르고 **홈 화면에 추가**를 고른 뒤 **추가**를 누릅니다.
-3. 홈 화면의 🍁500 아이콘으로 실행하면 주소창 없이 앱처럼 열립니다.
+3. 홈 화면의 **Stick Talk** 아이콘(빨간 바탕의 말풍선 🍁)으로 실행하면 주소창 없이 앱처럼 열립니다.
 4. 아이폰이 **무음 모드**면 효과음이 들리지 않을 수 있습니다. 원어민 음성이 안 나오면 화면을 한 번 터치한 뒤 ▶를 누르세요.
 
 ### 안드로이드: 홈 화면에 추가
@@ -107,15 +110,16 @@ git push -u origin main
 
 ### PC에서 확인하기
 ```bash
-cd vocab-project
+cd sticktalk
 python3 -m http.server 8000
 # 브라우저에서 http://localhost:8000
 ```
 
 ---
 
-## 4. 데이터 바꿔 끼우기
-- `words.js`의 형식(위 데이터 구조)만 맞추면 다른 단어장으로 바꿀 수 있습니다.
+## 4. 데이터 늘리기·바꿔 끼우기
+- **늘리기:** `words.js` 맨 아래에 같은 형식으로 `window.WORDS.push( {...}, {...} );` 묶음을 추가합니다. `id`는 501, 502…처럼 이어 붙이세요. 전체 개수, 진도, 단어장은 자동으로 늘어납니다. 올린 뒤에는 `sw.js`의 `VERSION`을 올려 주세요.
+- **바꾸기:** `words.js`의 형식(위 데이터 구조)만 맞추면 다른 단어장으로 바꿀 수 있습니다.
 - `id`는 진도 저장 키이므로 **한 번 정하면 바꾸지 마세요.** `rank`가 작은 항목부터 배웁니다.
 - `situation` 값은 `홈스테이 / 수업 / 카페·식당 / 교통 / 쇼핑 / 친구 / 일반` 중 하나입니다.
 - 빈칸 채우기 문제를 내려면 `example_en` 안에 `en`이 그대로 들어 있어야 합니다(-s, -ed, -ing 같은 간단한 활용형도 인식). 찾지 못하면 그 항목은 다른 문제 방식으로 나옵니다.

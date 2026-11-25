@@ -1,7 +1,7 @@
 {
-  "name": "캐나다 회화 500",
-  "short_name": "회화500",
-  "description": "캐나다 어학연수 대비 원어민 회화 단어·숙어 500 암기",
+  "name": "입에 붙는 영어",
+  "short_name": "Stick Talk",
+  "description": "외운 표현이 회화에서 바로 나오는 영어 단어·숙어 암기장",
   "lang": "ko",
   "start_url": "./",
   "scope": "./",
